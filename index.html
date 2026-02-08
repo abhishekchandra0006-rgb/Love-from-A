@@ -14,311 +14,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Sweet Journey For You 🍫</title>
+    <title>For My Sweetest Soul 🍫❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap');
 
         :root {
-            --pink: #ff4d6d;
-            --dark-choco: #3e2723;
-            --light-choco: #795548;
-            --bg: #fff0f3;
+            --primary-love: #ff4d6d;
+            --soft-pink: #ffb3c1;
+            --choco-rich: #432818;
+            --gold: #ffb703;
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
             font-family: 'Quicksand', sans-serif;
-            background-color: var(--bg);
+            background: radial-gradient(circle, #fff0f3 0%, #ffccd5 100%);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--choco-rich);
         }
 
-        /* Scene Management */
+        /* --- Audio Controls --- */
+        #music-toggle {
+            position: fixed; top: 20px; right: 20px;
+            z-index: 1000; cursor: pointer;
+            background: white; padding: 10px;
+            border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- Scene Setup --- */
         .scene {
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 100vh; width: 100vw;
+            position: absolute;
             text-align: center;
-            width: 90%;
-            height: 100%;
-            animation: fadeIn 0.8s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 1.5s ease;
         }
 
         .active { display: flex; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; filter: blur(10px); }
+            to { opacity: 1; filter: blur(0); }
         }
 
-        h1 { font-family: 'Pacifico', cursive; color: var(--dark-choco); font-size: 2rem; }
-        p { color: var(--light-choco); font-weight: bold; }
-
-        /* General Button Styling */
-        .btn {
-            background: var(--pink);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: 0.3s;
-            margin-top: 20px;
-        }
-        .btn:hover { transform: scale(1.1); background: #ff758f; }
-
-        /* --- Interface 1: Entrance --- */
-        .heart-loader {
-            font-size: 100px;
-            animation: heartbeat 1.2s infinite;
-            cursor: pointer;
-        }
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--primary-love); margin: 10px 0; text-shadow: 2px 2px white; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 30px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            max-width: 400px;
         }
 
-        /* --- Interface 2: Cartoon Ask --- */
-        .bear-container { position: relative; width: 150px; height: 150px; }
-        .bear { font-size: 80px; }
+        /* --- Interactive Elements --- */
+        .btn-love {
+            background: var(--primary-love);
+            color: white; border: none;
+            padding: 15px 40px; border-radius: 50px;
+            font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+            transition: 0.3s; margin-top: 20px;
+        }
+        .btn-love:hover { transform: translateY(-5px) scale(1.05); background: #ff758f; }
 
-        /* --- Interface 3: Chocolate Catching --- */
-        #game-canvas {
-            background: #ffe5ec;
-            border: 3px dashed var(--pink);
-            border-radius: 20px;
-            cursor: crosshair;
+        /* Floating Animation */
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        /* --- Interface 4: The Box --- */
-        .box {
-            width: 150px; height: 150px;
-            background: var(--dark-choco);
-            border: 5px solid gold;
-            position: relative;
-            cursor: pointer;
-            transition: 0.5s;
-        }
-        .box-lid {
-            position: absolute; top: 0; width: 100%; height: 50%;
-            background: #c2185b; border-bottom: 2px solid gold;
-            transition: 0.5s;
-        }
-        .box.open .box-lid { transform: translateY(-100px) rotate(-20deg); opacity: 0; }
+        /* --- Special Cartoon Style --- */
+        .cartoon-char { font-size: 100px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        
+        /* Choco Game */
+        #game-zone { width: 300px; height: 300px; position: relative; border: 2px solid var(--soft-pink); border-radius: 20px; overflow: hidden; background: white; }
+        .choco-drop { position: absolute; cursor: pointer; font-size: 30px; }
 
-        /* --- Interface 5: The Letter --- */
-        .letter {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 300px;
-            border-left: 10px solid var(--pink);
-            transform: rotate(-2deg);
-        }
+        /* Typewriter Effect */
+        .typewriter { overflow: hidden; border-right: .15em solid var(--primary-love); white-space: nowrap; margin: 0 auto; letter-spacing: .15em; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-love); } }
 
-        /* --- Interface 6: Drag & Feed --- */
-        .drop-zone {
-            width: 200px; height: 200px;
-            border: 4px dashed var(--pink);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-        .draggable-choco { font-size: 50px; cursor: grab; }
-
-        /* --- Interface 7: Finale --- */
-        .finale-text { font-size: 3rem; color: var(--pink); text-shadow: 2px 2px #fff; }
-
-        /* Floating objects */
-        .floating { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
 
-    <!-- Sounds -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Music.mp3" type="audio/mpeg">
+    <!-- Background Romantic Music -->
+    <audio id="romanticMusic" loop>
+        <!-- Royalty-free Romantic Piano Music -->
+        <source src="https://www.chosic.com/wp-content/uploads/2020/07/Emotional-Piano-Music-The-Glow-Of-Love.mp3" type="audio/mpeg">
     </audio>
+
+    <!-- SFX -->
     <audio id="popSound"><source src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
-    <audio id="munchSound"><source src="https://assets.mixkit.co/active_storage/sfx/1043/1043-preview.mp3"></audio>
+    <audio id="successSound"><source src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
 
-    <!-- Interface 1: The Start -->
+    <div id="music-toggle" onclick="toggleMusic()">🎵</div>
+
+    <!-- Chapter 1: The Invitation -->
     <div class="scene active" id="scene1">
-        <div class="heart-loader" onclick="startJourney()">❤️</div>
-        <h1>Tap the Heart to start our journey...</h1>
+        <div class="cartoon-char floating">💌</div>
+        <h1>Hello, My Angel...</h1>
+        <div class="glass-card">
+            <p>I’ve built a small world of sweetness just for you. Ready to enter?</p>
+            <button class="btn-love" onclick="startJourney()">Unlock My Heart ❤️</button>
+        </div>
     </div>
 
-    <!-- Interface 2: The Question -->
+    <!-- Chapter 2: The Soft Surprise -->
     <div class="scene" id="scene2">
-        <div class="bear">🧸</div>
-        <h1>Hello Beautiful!</h1>
-        <p>Before we proceed, can I give you something sweet?</p>
-        <button class="btn" onclick="nextScene(3)">Yes, of course! 😍</button>
+        <div class="cartoon-char">🧸</div>
+        <h1>I was thinking of you...</h1>
+        <p>And I realized, you're even sweeter than this bear's honey.</p>
+        <button class="btn-love" onclick="nextScene(3)">Tell me more... ✨</button>
     </div>
 
-    <!-- Interface 3: Chocolate Catching Game -->
+    <!-- Chapter 3: Interactive Sweetness -->
     <div class="scene" id="scene3">
-        <h1>Catch 5 Chocolates!</h1>
-        <p>Score: <span id="score">0</span></p>
-        <canvas id="game-canvas" width="300" height="300"></canvas>
+        <h1>Catch the Sweetness!</h1>
+        <p>Tap 3 chocolates to prove your love!</p>
+        <div id="game-zone"></div>
+        <p>Caught: <span id="score">0</span>/3</p>
     </div>
 
-    <!-- Interface 4: The Reveal -->
+    <!-- Chapter 4: The Magic Box -->
     <div class="scene" id="scene4">
-        <h1>You've Won a Gift!</h1>
-        <div class="box" id="chocoBox" onclick="openBox()">
-            <div class="box-lid"></div>
-            <div style="font-size: 50px; padding-top: 40px;">🍫</div>
-        </div>
-        <p>Tap to unwrap!</p>
+        <h1>A Gift for My Queen 👑</h1>
+        <div class="cartoon-char floating" style="cursor: pointer;" onclick="unwrapGift()">🎁</div>
+        <p>(Tap the gift to unwrap)</p>
     </div>
 
-    <!-- Interface 5: The Letter -->
+    <!-- Chapter 5: The Letter -->
     <div class="scene" id="scene5">
-        <div class="letter">
-            <h2>My Dear Love,</h2>
-            <p>You are sweeter than silk, creamier than milk, and more addictive than dark chocolate. Happy Chocolate Day!</p>
+        <div class="glass-card">
+            <h2 style="font-family: 'Dancing Script';">My Forever Love,</h2>
+            <p id="love-text"></p>
+            <button class="btn-love" onclick="nextScene(6)">My Promise... 💍</button>
         </div>
-        <button class="btn" onclick="nextScene(6)">Aww! Next? ❤️</button>
     </div>
 
-    <!-- Interface 6: Interactive Feeding -->
+    <!-- Chapter 6: The Feeding Game -->
     <div class="scene" id="scene6">
-        <h1>Feed the Hungry Bear!</h1>
-        <div class="drop-zone" id="bear-mouth" ondrop="drop(event)" ondragover="allowDrop(event)">🐻</div>
-        <div class="draggable-choco" id="choco1" draggable="true" ondragstart="drag(event)">🍫</div>
-        <p>Drag the chocolate to the bear's mouth!</p>
+        <h1>Open Wide!</h1>
+        <div class="cartoon-char" id="bear-head">🤤</div>
+        <p>Drag the chocolate to feed the bear (you!)</p>
+        <div class="cartoon-char" id="draggable-choco" draggable="true" ondragstart="drag(event)" style="cursor: grab;">🍫</div>
+        <div style="width: 150px; height: 150px; border: 3px dashed var(--primary-love); border-radius: 50%; margin-top: 20px;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     </div>
 
-    <!-- Interface 7: Grand Finale -->
+    <!-- Chapter 7: The Grand Finale -->
     <div class="scene" id="scene7">
-        <h1 class="finale-text">Happy Chocolate Day!</h1>
-        <p>I Love You Forever & Always ❤️</p>
-        <div style="font-size: 100px;">💑🍫✨</div>
-        <button class="btn" onclick="location.reload()">Replay Love? 🔄</button>
+        <h1>Happy Chocolate Day, Jaan! 🍫</h1>
+        <div class="cartoon-char">👩‍❤️‍👨</div>
+        <div class="glass-card">
+            <p>You are my favorite flavor of life. May our life be as sweet as dark chocolate and as smooth as silk.</p>
+            <h2 style="color: var(--primary-love);">I Love You Forever! ❤️</h2>
+        </div>
+        <button class="btn-love" onclick="restart()">Restart Love? 🔄</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        let currentScene = 1;
-        const bgMusic = document.getElementById('bgMusic');
-        const popSound = document.getElementById('popSound');
-        const munchSound = document.getElementById('munchSound');
+        let score = 0;
+        const music = document.getElementById('romanticMusic');
+        const pop = document.getElementById('popSound');
+        const success = document.getElementById('successSound');
+
+        function toggleMusic() {
+            return music.paused ? music.play() : music.pause();
+        }
 
         function nextScene(num) {
             document.querySelector('.active').classList.remove('active');
             document.getElementById('scene' + num).classList.add('active');
-            popSound.play();
-            if(num === 3) startCatchGame();
+            pop.play();
+            
+            if(num === 3) initGame();
+            if(num === 5) typeWriter();
         }
 
         function startJourney() {
-            bgMusic.play();
+            music.play();
             nextScene(2);
         }
 
-        // --- Scene 3: Game Logic ---
-        function startCatchGame() {
-            const canvas = document.getElementById('game-canvas');
-            const ctx = canvas.getContext('2d');
-            let score = 0;
-            let chocoY = 0;
-            let chocoX = Math.random() * 250;
-
-            function draw() {
-                ctx.clearRect(0, 0, 300, 300);
-                ctx.font = "30px Arial";
-                ctx.fillText("🍫", chocoX, chocoY);
-                chocoY += 3;
-
-                if (chocoY > 300) {
-                    chocoY = 0;
-                    chocoX = Math.random() * 250;
-                }
-
-                if (score < 5) {
-                    requestAnimationFrame(draw);
-                } else {
-                    nextScene(4);
-                }
-            }
-
-            canvas.addEventListener('mousedown', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                if (x > chocoX && x < chocoX + 40 && y > chocoY - 30 && y < chocoY + 10) {
+        // --- Game Logic ---
+        function initGame() {
+            const zone = document.getElementById('game-zone');
+            zone.innerHTML = '';
+            score = 0;
+            document.getElementById('score').innerText = score;
+            
+            for(let i=0; i<3; i++) {
+                let choco = document.createElement('div');
+                choco.className = 'choco-drop';
+                choco.innerHTML = '🍫';
+                choco.style.left = Math.random() * 250 + 'px';
+                choco.style.top = Math.random() * 250 + 'px';
+                choco.onclick = function() {
+                    this.style.display = 'none';
                     score++;
                     document.getElementById('score').innerText = score;
-                    chocoY = 0;
-                    chocoX = Math.random() * 250;
-                    popSound.play();
+                    success.play();
+                    if(score === 3) setTimeout(() => nextScene(4), 1000);
+                };
+                zone.appendChild(choco);
+            }
+        }
+
+        // --- Gift Logic ---
+        function unwrapGift() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            success.play();
+            setTimeout(() => nextScene(5), 1500);
+        }
+
+        // --- Letter Logic ---
+        function typeWriter() {
+            const text = "Every time I see chocolate, I think of your sweetness. But honestly? No chocolate in the world is even half as sweet as your smile. You are my heart's permanent treat! ❤️";
+            let i = 0;
+            const target = document.getElementById('love-text');
+            target.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    target.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
                 }
-            });
-            draw();
+            }
+            type();
         }
 
-        // --- Scene 4: Box Logic ---
-        function openBox() {
-            document.getElementById('chocoBox').classList.add('open');
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => nextScene(5), 2000);
-        }
-
-        // --- Scene 6: Drag & Drop Logic ---
+        // --- Drag Drop Logic ---
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
         function drop(ev) {
             ev.preventDefault();
-            const data = ev.dataTransfer.getData("text");
-            document.getElementById(data).style.display = "none";
-            document.getElementById('bear-mouth').innerText = "😋";
-            munchSound.play();
-            setTimeout(() => {
-                nextScene(7);
-                triggerFinalConfetti();
-            }, 1500);
+            document.getElementById('bear-head').innerHTML = '😋';
+            document.getElementById('draggable-choco').style.display = 'none';
+            success.play();
+            setTimeout(() => nextScene(7), 1500);
+            
+            // Grand Celebration
+            var end = Date.now() + (15 * 1000);
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
 
-        // --- Scene 7: Finale ---
-        function triggerFinalConfetti() {
-            const duration = 15 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+        function restart() { location.reload(); }
 
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        // Floating background hearts
+        // Floating Hearts Background
         setInterval(() => {
             const heart = document.createElement('div');
-            heart.classList.add('floating');
-            heart.innerHTML = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.top = "100vh";
-            heart.style.transition = "transform 6s linear";
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.bottom = '-20px';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.opacity = Math.random();
+            heart.style.transition = 'all 5s linear';
+            heart.style.zIndex = '-1';
             document.body.appendChild(heart);
+
             setTimeout(() => {
-                heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
+                heart.style.transform = `translateY(-110vh) translateX(${Math.random() * 50}px)`;
+                heart.style.opacity = '0';
             }, 100);
             setTimeout(() => heart.remove(), 6000);
-        }, 600);
+        }, 300);
     </script>
 </body>
 </html>
