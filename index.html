@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweetest Day for My Janvi | Happy Chocolate Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-choco: #2d1606;
+            --milk-choco: #4e2c1c;
+            --gold: #d4af37;
+            --cream: #fff5e1;
+            --heart-red: #ff4d6d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--dark-choco);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--cream);
+            transition: background 1s ease;
+        }
+
+        /* Dynamic Particle Background */
+        #particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* Intro Screen */
+        .intro-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-choco);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .intro-btn {
+            background: var(--gold);
+            color: var(--dark-choco);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            text-align: center;
+            display: none; /* Shown after intro */
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* 3D Chocolate Box */
+        .box-wrapper {
+            perspective: 1000px;
+            margin: 50px auto;
+            width: 250px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .choco-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .lid {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #5d3422, #2d1606);
+            border: 5px solid var(--gold);
+            border-radius: 15px;
+            z-index: 2;
+            transform-origin: top;
+            transition: transform 1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .lid::after {
+            content: "For Janvi 🍫";
+            font-family: 'Dancing Script', cursive;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        .box-base {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: var(--cream);
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 15px;
+            gap: 10px;
+            z-index: 1;
+        }
+
+        .choco-item {
+            background: #4e2c1c;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .box-wrapper.open .lid { transform: rotateX(-115deg); }
+
+        /* Sweetness Meter Section */
+        .meter-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 20px;
+            background: #222;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, var(--gold), var(--heart-red));
+            transition: width 2s ease;
+        }
+
+        /* Romantic Letter */
+        .letter {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.5s ease;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            line-height: 2;
+        }
+
+        .letter.reveal { opacity: 1; transform: translateY(0); }
+
+        .highlight { color: var(--gold); font-weight: bold; font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
+
+        footer { margin-top: 100px; padding-bottom: 50px; font-size: 0.8rem; opacity: 0.5; letter-spacing: 2px; }
+
+        /* Audio Player Toggle */
+        #music-toggle {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: var(--gold);
+            border: none; border-radius: 50%;
+            width: 50px; height: 50px;
+            cursor: pointer; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Intro Reveal Screen -->
+    <div class="intro-overlay" id="intro">
+        <h2 style="margin-bottom: 20px; font-family: 'Playfair Display';">A Sweet Surprise Awaits...</h2>
+        <button class="intro-btn" onclick="startExperience()">Open Your Gift, Janvi</button>
+    </div>
+
+    <!-- Background Music (Bollywood Instrumental Style) -->
+    <!-- This is a high-quality romantic instrumental track -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="particles"></div>
+
+    <div class="container" id="main-content">
+        <h1>Happy Chocolate Day, Janvi!</h1>
+        <p class="subtitle">Because you are sweeter than every treat in existence.</p>
+
+        <!-- Interactive Box -->
+        <div class="box-wrapper" onclick="openBox()">
+            <div class="choco-box" id="box">
+                <div class="lid"></div>
+                <div class="box-base">
+                    <div class="choco-item">🍫</div>
+                    <div class="choco-item">🍬</div>
+                    <div class="choco-item">❤️</div>
+                    <div class="choco-item">🍩</div>
+                    <div class="choco-item">🍪</div>
+                    <div class="choco-item">💖</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Meter -->
+        <div class="meter-section" id="meter-ui" style="display: none;">
+            <h3>Janvi's Sweetness Level</h3>
+            <div class="meter-bar"><div class="progress" id="progress"></div></div>
+            <p id="meter-text">Calculating sweetness...</p>
+        </div>
+
+        <!-- The Final Letter -->
+        <div class="letter" id="letter">
+            <p>
+                My Dearest <span class="highlight">Janvi</span>,<br><br>
+                Just like the finest chocolate, you bring a richness to my life that I never knew I was missing. 
+                Some days you're as comforting as milk chocolate, and some days you're as bold and passionate as dark cocoa.
+                <br><br>
+                But today, I want to promise you something more than just sweets. 
+                <span class="highlight">I promise to be the person who always adds sweetness to your bitter days</span> 
+                and celebrates every joyful moment with you. 
+                <br><br>
+                You aren't just my girlfriend; you are my favorite "flavor" of life.
+                <br><br>
+                Forever Yours, <br>
+                <span class="highlight">Your Favorite Person</span>
+            </p>
+        </div>
+
+        <footer>MADE WITH LOVE FOR JANVI • 2024</footer>
+    </div>
+
+    <button id="music-toggle" onclick="toggleMusic()">🎵</button>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        function startExperience() {
+            document.getElementById('intro').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                music.play();
+                isPlaying = true;
+                startFallingParticles();
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            if (isPlaying) music.pause();
+            else music.play();
+            isPlaying = !isPlaying;
+        }
+
+        function openBox() {
+            document.getElementById('box').parentElement.classList.add('open');
+            setTimeout(() => {
+                document.getElementById('meter-ui').style.display = 'block';
+                animateMeter();
+            }, 1000);
+        }
+
+        function animateMeter() {
+            const bar = document.getElementById('progress');
+            const text = document.getElementById('meter-text');
+            bar.style.width = "100%";
+            
+            setTimeout(() => { text.innerText = "Error: Sweetness levels exceeding 1000%!"; }, 1000);
+            setTimeout(() => { text.innerHTML = "Result: <span style='color:#ff4d6d'>Janvi is the sweetest girl in the universe!</span>"; }, 2500);
+            
+            setTimeout(() => {
+                document.getElementById('letter').classList.add('reveal');
+                // Create a burst of hearts
+                for(let i=0; i<30; i++) createParticle(true);
+            }, 4000);
+        }
+
+        function createParticle(isHeartOnly = false) {
+            const container = document.getElementById('particles');
+            const p = document.createElement('div');
+            const items = ['🍫', '❤️', '🍬', '✨', '💖', '🍫'];
+            p.innerHTML = isHeartOnly ? '❤️' : items[Math.floor(Math.random()*items.length)];
+            p.style.position = 'absolute';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-50px';
+            p.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            p.style.opacity = Math.random();
+            p.style.transition = `transform ${Math.random() * 3 + 2}s linear, top ${Math.random() * 3 + 2}s linear`;
+            
+            container.appendChild(p);
+            setTimeout(() => {
+                p.style.top = '110vh';
+                p.style.transform = `rotate(${Math.random() * 360}deg)`;
+            }, 100);
+            setTimeout(() => p.remove(), 5000);
+        }
+
+        function startFallingParticles() {
+            setInterval(createParticle, 400);
+        }
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
