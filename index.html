@@ -14,343 +14,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweetest Day for My Janvi | Happy Chocolate Day</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>A Sweet Journey For You 🍫</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+
         :root {
-            --dark-choco: #2d1606;
-            --milk-choco: #4e2c1c;
-            --gold: #d4af37;
-            --cream: #fff5e1;
-            --heart-red: #ff4d6d;
+            --pink: #ff4d6d;
+            --dark-choco: #3e2723;
+            --light-choco: #795548;
+            --bg: #fff0f3;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--dark-choco);
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            color: var(--cream);
-            transition: background 1s ease;
-        }
-
-        /* Dynamic Particle Background */
-        #particles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
-        }
-
-        /* Intro Screen */
-        .intro-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dark-choco);
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease;
+            justify-content: center;
         }
 
-        .intro-btn {
-            background: var(--gold);
-            color: var(--dark-choco);
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
+        /* Scene Management */
+        .scene {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 90%;
+            height: 100%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-family: 'Pacifico', cursive; color: var(--dark-choco); font-size: 2rem; }
+        p { color: var(--light-choco); font-weight: bold; }
+
+        /* General Button Styling */
+        .btn {
+            background: var(--pink);
+            color: white;
             border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
             font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-            animation: pulse 2s infinite;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            transition: 0.3s;
+            margin-top: 20px;
         }
+        .btn:hover { transform: scale(1.1); background: #ff758f; }
 
-        @keyframes pulse {
+        /* --- Interface 1: Entrance --- */
+        .heart-loader {
+            font-size: 100px;
+            animation: heartbeat 1.2s infinite;
+            cursor: pointer;
+        }
+        @keyframes heartbeat {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.3); }
             100% { transform: scale(1); }
         }
 
-        /* Main Content */
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 50px 20px;
-            text-align: center;
-            display: none; /* Shown after intro */
-        }
+        /* --- Interface 2: Cartoon Ask --- */
+        .bear-container { position: relative; width: 150px; height: 150px; }
+        .bear { font-size: 80px; }
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.8;
-        }
-
-        /* 3D Chocolate Box */
-        .box-wrapper {
-            perspective: 1000px;
-            margin: 50px auto;
-            width: 250px;
-            height: 200px;
-            cursor: pointer;
-        }
-
-        .choco-box {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .lid {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #5d3422, #2d1606);
-            border: 5px solid var(--gold);
-            border-radius: 15px;
-            z-index: 2;
-            transform-origin: top;
-            transition: transform 1s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .lid::after {
-            content: "For Janvi 🍫";
-            font-family: 'Dancing Script', cursive;
-            color: var(--gold);
-            font-size: 1.5rem;
-        }
-
-        .box-base {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: var(--cream);
-            border-radius: 15px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            padding: 15px;
-            gap: 10px;
-            z-index: 1;
-        }
-
-        .choco-item {
-            background: #4e2c1c;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .box-wrapper.open .lid { transform: rotateX(-115deg); }
-
-        /* Sweetness Meter Section */
-        .meter-section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
+        /* --- Interface 3: Chocolate Catching --- */
+        #game-canvas {
+            background: #ffe5ec;
+            border: 3px dashed var(--pink);
             border-radius: 20px;
-            margin-top: 50px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(10px);
+            cursor: crosshair;
         }
 
-        .meter-bar {
-            width: 100%;
-            height: 20px;
-            background: #222;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
+        /* --- Interface 4: The Box --- */
+        .box {
+            width: 150px; height: 150px;
+            background: var(--dark-choco);
+            border: 5px solid gold;
+            position: relative;
+            cursor: pointer;
+            transition: 0.5s;
         }
-
-        .progress {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(to right, var(--gold), var(--heart-red));
-            transition: width 2s ease;
+        .box-lid {
+            position: absolute; top: 0; width: 100%; height: 50%;
+            background: #c2185b; border-bottom: 2px solid gold;
+            transition: 0.5s;
         }
+        .box.open .box-lid { transform: translateY(-100px) rotate(-20deg); opacity: 0; }
 
-        /* Romantic Letter */
+        /* --- Interface 5: The Letter --- */
         .letter {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.5s ease;
-            margin-top: 50px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            line-height: 2;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 300px;
+            border-left: 10px solid var(--pink);
+            transform: rotate(-2deg);
         }
 
-        .letter.reveal { opacity: 1; transform: translateY(0); }
-
-        .highlight { color: var(--gold); font-weight: bold; font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
-
-        footer { margin-top: 100px; padding-bottom: 50px; font-size: 0.8rem; opacity: 0.5; letter-spacing: 2px; }
-
-        /* Audio Player Toggle */
-        #music-toggle {
-            position: fixed;
-            bottom: 20px; right: 20px;
-            background: var(--gold);
-            border: none; border-radius: 50%;
-            width: 50px; height: 50px;
-            cursor: pointer; z-index: 100;
-            display: flex; justify-content: center; align-items: center;
+        /* --- Interface 6: Drag & Feed --- */
+        .drop-zone {
+            width: 200px; height: 200px;
+            border: 4px dashed var(--pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 20px;
         }
+        .draggable-choco { font-size: 50px; cursor: grab; }
+
+        /* --- Interface 7: Finale --- */
+        .finale-text { font-size: 3rem; color: var(--pink); text-shadow: 2px 2px #fff; }
+
+        /* Floating objects */
+        .floating { position: fixed; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
 
-    <!-- Intro Reveal Screen -->
-    <div class="intro-overlay" id="intro">
-        <h2 style="margin-bottom: 20px; font-family: 'Playfair Display';">A Sweet Surprise Awaits...</h2>
-        <button class="intro-btn" onclick="startExperience()">Open Your Gift, Janvi</button>
-    </div>
-
-    <!-- Background Music (Bollywood Instrumental Style) -->
-    <!-- This is a high-quality romantic instrumental track -->
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <!-- Sounds -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Music.mp3" type="audio/mpeg">
     </audio>
+    <audio id="popSound"><source src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
+    <audio id="munchSound"><source src="https://assets.mixkit.co/active_storage/sfx/1043/1043-preview.mp3"></audio>
 
-    <div id="particles"></div>
-
-    <div class="container" id="main-content">
-        <h1>Happy Chocolate Day, Janvi!</h1>
-        <p class="subtitle">Because you are sweeter than every treat in existence.</p>
-
-        <!-- Interactive Box -->
-        <div class="box-wrapper" onclick="openBox()">
-            <div class="choco-box" id="box">
-                <div class="lid"></div>
-                <div class="box-base">
-                    <div class="choco-item">🍫</div>
-                    <div class="choco-item">🍬</div>
-                    <div class="choco-item">❤️</div>
-                    <div class="choco-item">🍩</div>
-                    <div class="choco-item">🍪</div>
-                    <div class="choco-item">💖</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interactive Meter -->
-        <div class="meter-section" id="meter-ui" style="display: none;">
-            <h3>Janvi's Sweetness Level</h3>
-            <div class="meter-bar"><div class="progress" id="progress"></div></div>
-            <p id="meter-text">Calculating sweetness...</p>
-        </div>
-
-        <!-- The Final Letter -->
-        <div class="letter" id="letter">
-            <p>
-                My Dearest <span class="highlight">Janvi</span>,<br><br>
-                Just like the finest chocolate, you bring a richness to my life that I never knew I was missing. 
-                Some days you're as comforting as milk chocolate, and some days you're as bold and passionate as dark cocoa.
-                <br><br>
-                But today, I want to promise you something more than just sweets. 
-                <span class="highlight">I promise to be the person who always adds sweetness to your bitter days</span> 
-                and celebrates every joyful moment with you. 
-                <br><br>
-                You aren't just my girlfriend; you are my favorite "flavor" of life.
-                <br><br>
-                Forever Yours, <br>
-                <span class="highlight">Your Favorite Person</span>
-            </p>
-        </div>
-
-        <footer>MADE WITH LOVE FOR JANVI • 2024</footer>
+    <!-- Interface 1: The Start -->
+    <div class="scene active" id="scene1">
+        <div class="heart-loader" onclick="startJourney()">❤️</div>
+        <h1>Tap the Heart to start our journey...</h1>
     </div>
 
-    <button id="music-toggle" onclick="toggleMusic()">🎵</button>
+    <!-- Interface 2: The Question -->
+    <div class="scene" id="scene2">
+        <div class="bear">🧸</div>
+        <h1>Hello Beautiful!</h1>
+        <p>Before we proceed, can I give you something sweet?</p>
+        <button class="btn" onclick="nextScene(3)">Yes, of course! 😍</button>
+    </div>
 
+    <!-- Interface 3: Chocolate Catching Game -->
+    <div class="scene" id="scene3">
+        <h1>Catch 5 Chocolates!</h1>
+        <p>Score: <span id="score">0</span></p>
+        <canvas id="game-canvas" width="300" height="300"></canvas>
+    </div>
+
+    <!-- Interface 4: The Reveal -->
+    <div class="scene" id="scene4">
+        <h1>You've Won a Gift!</h1>
+        <div class="box" id="chocoBox" onclick="openBox()">
+            <div class="box-lid"></div>
+            <div style="font-size: 50px; padding-top: 40px;">🍫</div>
+        </div>
+        <p>Tap to unwrap!</p>
+    </div>
+
+    <!-- Interface 5: The Letter -->
+    <div class="scene" id="scene5">
+        <div class="letter">
+            <h2>My Dear Love,</h2>
+            <p>You are sweeter than silk, creamier than milk, and more addictive than dark chocolate. Happy Chocolate Day!</p>
+        </div>
+        <button class="btn" onclick="nextScene(6)">Aww! Next? ❤️</button>
+    </div>
+
+    <!-- Interface 6: Interactive Feeding -->
+    <div class="scene" id="scene6">
+        <h1>Feed the Hungry Bear!</h1>
+        <div class="drop-zone" id="bear-mouth" ondrop="drop(event)" ondragover="allowDrop(event)">🐻</div>
+        <div class="draggable-choco" id="choco1" draggable="true" ondragstart="drag(event)">🍫</div>
+        <p>Drag the chocolate to the bear's mouth!</p>
+    </div>
+
+    <!-- Interface 7: Grand Finale -->
+    <div class="scene" id="scene7">
+        <h1 class="finale-text">Happy Chocolate Day!</h1>
+        <p>I Love You Forever & Always ❤️</p>
+        <div style="font-size: 100px;">💑🍫✨</div>
+        <button class="btn" onclick="location.reload()">Replay Love? 🔄</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        const music = document.getElementById('bg-music');
-        let isPlaying = false;
+        let currentScene = 1;
+        const bgMusic = document.getElementById('bgMusic');
+        const popSound = document.getElementById('popSound');
+        const munchSound = document.getElementById('munchSound');
 
-        function startExperience() {
-            document.getElementById('intro').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                music.play();
-                isPlaying = true;
-                startFallingParticles();
-            }, 1000);
+        function nextScene(num) {
+            document.querySelector('.active').classList.remove('active');
+            document.getElementById('scene' + num).classList.add('active');
+            popSound.play();
+            if(num === 3) startCatchGame();
         }
 
-        function toggleMusic() {
-            if (isPlaying) music.pause();
-            else music.play();
-            isPlaying = !isPlaying;
+        function startJourney() {
+            bgMusic.play();
+            nextScene(2);
         }
 
+        // --- Scene 3: Game Logic ---
+        function startCatchGame() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            let score = 0;
+            let chocoY = 0;
+            let chocoX = Math.random() * 250;
+
+            function draw() {
+                ctx.clearRect(0, 0, 300, 300);
+                ctx.font = "30px Arial";
+                ctx.fillText("🍫", chocoX, chocoY);
+                chocoY += 3;
+
+                if (chocoY > 300) {
+                    chocoY = 0;
+                    chocoX = Math.random() * 250;
+                }
+
+                if (score < 5) {
+                    requestAnimationFrame(draw);
+                } else {
+                    nextScene(4);
+                }
+            }
+
+            canvas.addEventListener('mousedown', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                if (x > chocoX && x < chocoX + 40 && y > chocoY - 30 && y < chocoY + 10) {
+                    score++;
+                    document.getElementById('score').innerText = score;
+                    chocoY = 0;
+                    chocoX = Math.random() * 250;
+                    popSound.play();
+                }
+            });
+            draw();
+        }
+
+        // --- Scene 4: Box Logic ---
         function openBox() {
-            document.getElementById('box').parentElement.classList.add('open');
-            setTimeout(() => {
-                document.getElementById('meter-ui').style.display = 'block';
-                animateMeter();
-            }, 1000);
+            document.getElementById('chocoBox').classList.add('open');
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            setTimeout(() => nextScene(5), 2000);
         }
 
-        function animateMeter() {
-            const bar = document.getElementById('progress');
-            const text = document.getElementById('meter-text');
-            bar.style.width = "100%";
-            
-            setTimeout(() => { text.innerText = "Error: Sweetness levels exceeding 1000%!"; }, 1000);
-            setTimeout(() => { text.innerHTML = "Result: <span style='color:#ff4d6d'>Janvi is the sweetest girl in the universe!</span>"; }, 2500);
-            
+        // --- Scene 6: Drag & Drop Logic ---
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            document.getElementById(data).style.display = "none";
+            document.getElementById('bear-mouth').innerText = "😋";
+            munchSound.play();
             setTimeout(() => {
-                document.getElementById('letter').classList.add('reveal');
-                // Create a burst of hearts
-                for(let i=0; i<30; i++) createParticle(true);
-            }, 4000);
+                nextScene(7);
+                triggerFinalConfetti();
+            }, 1500);
         }
 
-        function createParticle(isHeartOnly = false) {
-            const container = document.getElementById('particles');
-            const p = document.createElement('div');
-            const items = ['🍫', '❤️', '🍬', '✨', '💖', '🍫'];
-            p.innerHTML = isHeartOnly ? '❤️' : items[Math.floor(Math.random()*items.length)];
-            p.style.position = 'absolute';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.top = '-50px';
-            p.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            p.style.opacity = Math.random();
-            p.style.transition = `transform ${Math.random() * 3 + 2}s linear, top ${Math.random() * 3 + 2}s linear`;
-            
-            container.appendChild(p);
+        // --- Scene 7: Finale ---
+        function triggerFinalConfetti() {
+            const duration = 15 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Floating background hearts
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('floating');
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = "100vh";
+            heart.style.transition = "transform 6s linear";
+            document.body.appendChild(heart);
             setTimeout(() => {
-                p.style.top = '110vh';
-                p.style.transform = `rotate(${Math.random() * 360}deg)`;
+                heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
             }, 100);
-            setTimeout(() => p.remove(), 5000);
-        }
-
-        function startFallingParticles() {
-            setInterval(createParticle, 400);
-        }
+            setTimeout(() => heart.remove(), 6000);
+        }, 600);
     </script>
 </body>
 </html>
